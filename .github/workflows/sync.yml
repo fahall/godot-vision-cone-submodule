@@ -29,7 +29,7 @@ jobs:
           
       - name: Sync vision_cone_2d files
         run: |
-          rm -rf *
+          find . -mindepth 1 -not -path "./.git*" -not -path "./.github*" -not -path "./upstream*" -exec rm -rf {} +
           cp -r upstream/addons/vision_cone_2d/. ./
 
       - name: Commit and push changes
