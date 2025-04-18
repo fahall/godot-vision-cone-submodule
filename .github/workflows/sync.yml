@@ -30,7 +30,7 @@ jobs:
       - name: Sync vision_cone_2d files
         run: |
           rm -rf *
-          cp -r upstream/addons/vision_cone_2d/* ./
+          cp -r upstream/addons/vision_cone_2d/. ./
 
       - name: Commit and push changes
         run: |
