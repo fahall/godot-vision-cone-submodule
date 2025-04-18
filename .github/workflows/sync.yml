@@ -1,9 +1,9 @@
 ﻿name: Sync with godot-vision-cone
 
 on:
-  workflow_dispatch:  # manual trigger
   schedule:
-    - cron: "0 8 1 * *" // every month on the 1st at 08:00 UTC
+    - cron: '0 8 1 * *'     # once per month, 8:00 AM UTC on the 1st
+  workflow_dispatch:        # allows manual trigger
 
 jobs:
   sync:
