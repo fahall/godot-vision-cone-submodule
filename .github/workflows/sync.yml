@@ -1,6 +1,9 @@
 ﻿name: Sync with godot-vision-cone
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '0 8 1 * *'     # once per month, 8:00 AM UTC on the 1st
   workflow_dispatch:        # allows manual trigger
@@ -19,6 +22,11 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/fahall/godot-vision-cone.git upstream
 
+      - name: Debug upstream contents
+        run: |
+          ls -al upstream
+          ls -al upstream/addons
+          
       - name: Sync vision_cone_2d files
         run: |
           rm -rf *
