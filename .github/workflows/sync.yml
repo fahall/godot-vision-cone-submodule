@@ -1,0 +1,40 @@
+﻿name: Sync with godot-vision-cone
+
+on:
+  workflow_dispatch:  # manual trigger
+  schedule:
+    - cron: "0 8 1 * *" // every month on the 1st at 08:00 UTC
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout wrapper repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Clone upstream addon
+        run: |
+          git clone --depth 1 https://github.com/fahall/godot-vision-cone.git upstream
+
+      - name: Sync vision_cone_2d files
+        run: |
+          rm -rf *
+          cp -r upstream/addons/vision_cone_2d/* ./
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "Sync from upstream godot-vision-cone"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
