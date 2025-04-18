@@ -34,7 +34,10 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git rm --cached -r upstream || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git rm --cached -r upstream 2>/dev/null || true
           
           if [ -n "$(git status --porcelain)" ]; then
             git add .
